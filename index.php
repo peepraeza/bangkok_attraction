@@ -36,7 +36,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", Arial, Helvetica, sans-serif}
       <div class="w3-row-padding" style="margin:0 -16px;">
         <div class="w3-half">
           <label>Location</label>
-          <form action="show_data.php??place_name=<?php echo $_GET['place_name'];?>" method="get" id="form1">
+          <form action="place.php??place_name=<?php echo $_GET['place_name'];?>" method="get" id="form1">
           <input class="w3-input w3-border" type="text" placeholder="Find Location" name="place_name" id="place_name">
         </div>
       </div>
