@@ -1,10 +1,39 @@
 <?php  
 	require 'connectdb.php';
 	
-	$place_name = $_GET['place_name'];
-	$query = "SELECT * FROM Attraction WHERE place_name='$place_name'";
+ 	$place_name = $_GET['place_name'];
+// 	$query = "SELECT * FROM Attraction WHERE place_name='$place_name'";
+// 	$result = mysqli_query($dbcon, $query);
+// 	$row = mysqli_fetch_array($result, MYSQLI_ASSOC)
+	$query = "SELECT * FROM Near_By INNER JOIN Attraction ON Near_By.place_id = Attraction.place_id WHERE Attraction.place_name = '$place_name'";
 	$result = mysqli_query($dbcon, $query);
-	$row = mysqli_fetch_array($result, MYSQLI_ASSOC)
+  
+
+	while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+	  $name = $row['place_name'];
+	  $fee = $row['place_cost'];
+	  $catagory = $row['place_catagory'];
+	  $detail = $row['place_detail'];
+	  $picture = $row['place_picture'];
+	 $station_id[] =  $row['station_id'];
+	}
+	for($i = 0; $i < count($station_id); $i++){
+	  $query2 = "SELECT * FROM Station s
+	              INNER JOIN Go_By g 
+	              ON s.station_id = g.station_id 
+	              INNER JOIN Transportation t
+	              ON g.transport_id = t.transport_id
+	              WHERE s.station_id = '$station_id[$i]'";
+
+	  $result2 = mysqli_query($dbcon, $query2);
+	  while($row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC)) {
+	    echo $row2['station_name'];
+	    echo " ";
+	    echo $row2['station_transport'];
+	    echo " ";
+	    echo $row2['transport_line'];
+	  }
+	}
 ?>
 
 <!DOCTYPE html>
@@ -28,14 +57,14 @@ h1,h2,h3,h4,h5,h6 {
   <!-- About Section -->
   <div class="w3-row w3-padding-32" id="about">
     <div class="w3-col m6 w3-padding-large w3-hide-small">
-     <img src="<?php echo $row['place_picture'] ?>" class="w3-round w3-image" alt="Table Setting" width="600" height="750">
+     <img src="<?php echo $picture ?>" class="w3-round w3-image" alt="Table Setting" width="600" height="750">
     </div>
 
     <div class="w3-col m6 w3-padding-large">
-      <h1 class="w3-center"><?php echo $row['place_name'] ?></h1><br>
-      <p class="w3-large" style="text-indent: 2.5em;"><?php echo $row['place_detail'] ?></p>
-      <p class="w3-large">Catagory : <?php echo $row['place_catagory'] ?></p>
-      <p class="w3-large">Entrance Fee : <?php echo ($row['place_cost'] == 0)? "Free" : $row['place_cost'] ?></p>
+      <h1 class="w3-center"><?php echo $name ?></h1><br>
+      <p class="w3-large" style="text-indent: 2.5em;"><?php echo $detail ?></p>
+      <p class="w3-large">Catagory : <?php echo $catagory ?></p>
+      <p class="w3-large">Entrance Fee : <?php echo ($fee == 0)? "Free" : $fee ?></p>
       </div>
   </div>
   
