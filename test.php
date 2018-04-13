@@ -15,7 +15,6 @@
 	              INNER JOIN Transportation t
 	              ON g.transport_id = t.transport_id
 	              WHERE s.station_id = '$station_id[$i]'";
-	  //$query2 = "SELECT * FROM Station WHERE station_id = '$station_id[$i]'";
 
 	  $result2 = mysqli_query($dbcon, $query2);
 	  while($row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC)) {
@@ -26,15 +25,7 @@
 	    echo $row2['transport_line'];
 	  }
 	}
-	 // $query2 = "SELECT station_name, station_transport FROM Station WHERE station_id = '$station_id'";
-	 // $result2 = mysqli_query($dbcon, $query2);
-	 // while($row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC)) {
-	    
-	   // echo $row2['station_name'];
 
-	    //echo $row2['station_transport'];
-	  //echo count($station_id);
-	 // echo $station_id[1];
 	
 ?>
 
