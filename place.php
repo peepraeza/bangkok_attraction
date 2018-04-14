@@ -2,13 +2,9 @@
 	require 'connectdb.php';
 	
  	$place_name = $_GET['place_name'];
-// 	$query = "SELECT * FROM Attraction WHERE place_name='$place_name'";
-// 	$result = mysqli_query($dbcon, $query);
-// 	$row = mysqli_fetch_array($result, MYSQLI_ASSOC)
-	$query = "SELECT * FROM Near_By INNER JOIN Attraction ON Near_By.place_id = Attraction.place_id WHERE Attraction.place_name = '$place_name'";
+  $query = "SELECT * FROM Near_By INNER JOIN Attraction ON Near_By.place_id = Attraction.place_id WHERE Attraction.place_name = '$place_name'";
 	$result = mysqli_query($dbcon, $query);
   
-
 	while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
 	  $name = $row['place_name'];
 	  $fee = $row['place_cost'];
@@ -23,12 +19,13 @@
 	              ON s.station_id = g.station_id 
 	              INNER JOIN Transportation t
 	              ON g.transport_id = t.transport_id
+	              INNER JOIN Type_Transport tt
+	              ON t.transport_type = tt.type_id
 	              WHERE s.station_id = '$station_id[$i]'";
-
 	  $result2 = mysqli_query($dbcon, $query2);
 	  while($row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC)) {
 	    $station_name[] =  $row2['station_name'];
-	    $station_transport[] =  $row2['station_transport'];
+	    $station_transport[] =  $row2['type_transport'];
 	    $transport_line[] =  $row2['transport_line'];
 	  }
 	}

@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <style>
 body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", Arial, Helvetica, sans-serif}
@@ -45,37 +46,39 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", Arial, Helvetica, sans-serif}
       </form>
     </div>
    
+   <?php  
+	require 'connectdb.php';
+
+  $query = "SELECT * FROM Type_Transport";
+	$result = mysqli_query($dbcon, $query);
+	?>
     <div id="Transportation" class="w3-container w3-white w3-padding-16 myLink">
       <h3>Find locations from transportation</h3>
       <div class="w3-row-padding" style="margin:0 -16px;">
         <div class="w3-half">
+          <form action="listplace.php??transport=<?php echo $_GET['transport'];?>??line=<?php echo $_GET['line'];?>" method="get" id="form1">
           <div class="form-group">
             <label for="sel1">Select Transport:</label>
-            <select class="form-control" id="sel1">
-              <option>Bus</option>
-              <option>MRT</option>
-              <option>BTS</option>
-              <option>Boat</option>
+            <select class="form-control" id="transport" name="transport">
+              <option>-------Select-------</option>
+              <?php
+					    while($row = mysqli_fetch_array($result, MYSQLI_NUM)){
+					       echo "<option value='$row[0]'>$row[1]</option>";
+					      }
+					    ?>
             </select>
           </div>
         </div>
         <div class="w3-half">
           <div class="form-group">
             <label for="sel1">Select Line:</label>
-            <select class="form-control" id="sel1">
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>3</option>
-              <option>4</option>
-              <option>3</option>
-              <option>4</option>
+            <select class="form-control" id="line" name="line">
+              <option>-------Select-------</option>
             </select>
           </div>
         </div>
       </div>
-      <p><button class="w3-button w3-dark-grey">Search</button></p>
+      <p><input type="submit" value="Search" class="w3-button w3-dark-grey"></p>
     </div>
 
     <div id="Category" class="w3-container w3-white w3-padding-16 myLink">
@@ -198,6 +201,26 @@ function openLink(evt, linkName) {
 }
 // Click on the first tablink on load
 document.getElementsByClassName("tablink")[0].click();
+</script>
+<script>
+	$(document).ready(function() {
+	$("#transport").change(function() {
+		var transport_id = $(this).val();
+		if(transport_id != "") {
+			$.ajax({
+				url:"get_line.php",
+				data:{type_id:transport_id},
+				type:'POST',
+				success:function(response) {
+					var resp = $.trim(response);
+					$("#line").html(resp);
+				}
+			});
+		} else {
+			$("#line").html("<option value=''>------- Select --------</option>");
+		}
+	});
+});
 </script>
 
 </body>
