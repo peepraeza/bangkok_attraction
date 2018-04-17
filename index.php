@@ -55,7 +55,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", Arial, Helvetica, sans-serif}
       <h3>Find locations from transportation</h3>
       <div class="w3-row-padding" style="margin:0 -16px;">
         <div class="w3-half">
-          <form action="listplace.php??transport=<?php echo $_GET['transport'];?>??line=<?php echo $_GET['line'];?>" method="get" id="form1">
+          <form action="listplace.php??transport=<?php echo $_GET['transport'];?>??line=<?php echo $_GET['line'];?>" method="get" id="transport_form">
           <div class="form-group">
             <label for="sel1">Select Transport:</label>
             <select class="form-control" id="transport" name="transport">
@@ -79,23 +79,32 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", Arial, Helvetica, sans-serif}
       </div>
       <p><input type="submit" value="Search" class="w3-button w3-dark-grey"></p>
     </div>
+    </form>
 
+<?php 
+  $query2 = "SELECT * FROM Type_Location";
+	$result2 = mysqli_query($dbcon, $query2);
+?>
     <div id="Category" class="w3-container w3-white w3-padding-16 myLink">
       <h3>Find locations from categories</h3>
       <div class="w3-row-padding" style="margin:0 -16px;">
       <div class="w3-half">
+        <form action="listcatagory.php??catagory=<?php echo $_GET['catagory'];?>" method="get" id="form2">
       <div class="form-group">
         <label for="sel1">Select Category:</label>
-        <select class="form-control" id="sel1">
-          <option>Park</option>
-          <option>Shopping Mall</option>
-          <option>Musuem</option>
-          <option>Temple</option>
-        </select>
+        <select class="form-control" id="catagory" name="catagory">
+              <option>-------Select-------</option>
+              <?php
+					    while($row2 = mysqli_fetch_array($result2, MYSQLI_NUM)){
+					       echo "<option value='$row2[0]'>$row2[1]</option>";
+					      }
+					    ?>
+            </select>
       </div>
       </div>
       </div>
-      <p><button class="w3-button w3-dark-grey">Search</button></p>
+      <p><input type="submit" value="Search" class="w3-button w3-dark-grey"></p>
+      </form>
     </div>
   </div>
 </header>

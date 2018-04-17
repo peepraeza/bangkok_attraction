@@ -15,9 +15,13 @@
 	              WHERE T.transport_type = '$transport_id' AND T.transport_id='$line_id'";
   $result = mysqli_query($dbcon, $query);
 	  
-  while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
-    echo $row['place_name'];
-    echo "</br>";
-  }
  	?>
  	<meta charset="UTF-8">
+ 	<?php 
+ 	while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+ 	  ?>
+ 	<a href="place.php?place_name=<?php echo $row['place_name'] ?>"> <?php echo $row['place_name'] ?> </br> </a>
+ 	<?php 
+ 	}
+ 	?>
+ 	

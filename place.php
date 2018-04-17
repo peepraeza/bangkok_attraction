@@ -2,13 +2,18 @@
 	require 'connectdb.php';
 	
  	$place_name = $_GET['place_name'];
-  $query = "SELECT * FROM Near_By INNER JOIN Attraction ON Near_By.place_id = Attraction.place_id WHERE Attraction.place_name = '$place_name'";
+  $query = "SELECT * FROM Near_By n
+                      INNER JOIN Attraction a
+                      ON n.place_id = a.place_id 
+                      INNER JOIN Type_Location l
+                      ON a.place_catagory = l.type_local_id
+                      WHERE a.place_name = '$place_name'";
 	$result = mysqli_query($dbcon, $query);
   
 	while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
 	  $name = $row['place_name'];
 	  $fee = $row['place_cost'];
-	  $catagory = $row['place_catagory'];
+	  $catagory = $row['type_local_name'];
 	  $detail = $row['place_detail'];
 	  $picture = $row['place_picture'];
 	 $station_id[] =  $row['station_id'];
