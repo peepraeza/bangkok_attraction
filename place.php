@@ -2,9 +2,13 @@
 	require 'connectdb.php';
 	
  	$place_name = $_GET['place_name'];
-  $query = "SELECT * FROM Near_By n
-                      INNER JOIN Attraction a
-                      ON n.place_id = a.place_id 
+  // $query = "SELECT * FROM Near_By n
+  //                     INNER JOIN Attraction a
+  //                     ON n.place_id = a.place_id 
+  //                     INNER JOIN Type_Location l
+  //                     ON a.place_catagory = l.type_local_id
+  //                     WHERE a.place_name = '$place_name'";
+  $query = "SELECT * FROM Attraction a
                       INNER JOIN Type_Location l
                       ON a.place_catagory = l.type_local_id
                       WHERE a.place_name = '$place_name'";
@@ -16,24 +20,24 @@
 	  $catagory = $row['type_local_name'];
 	  $detail = $row['place_detail'];
 	  $picture = $row['place_picture'];
-	 $station_id[] =  $row['station_id'];
+	 //$station_id[] =  $row['station_id'];
 	}
-	for($i = 0; $i < count($station_id); $i++){
-	  $query2 = "SELECT * FROM Station s
-	              INNER JOIN Go_By g 
-	              ON s.station_id = g.station_id 
-	              INNER JOIN Transportation t
-	              ON g.transport_id = t.transport_id
-	              INNER JOIN Type_Transport tt
-	              ON t.transport_type = tt.type_id
-	              WHERE s.station_id = '$station_id[$i]'";
-	  $result2 = mysqli_query($dbcon, $query2);
-	  while($row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC)) {
-	    $station_name[] =  $row2['station_name'];
-	    $station_transport[] =  $row2['type_transport'];
-	    $transport_line[] =  $row2['transport_line'];
-	  }
-	}
+// 	for($i = 0; $i < count($station_id); $i++){
+// 	  $query2 = "SELECT * FROM Station s
+// 	              INNER JOIN Go_By g 
+// 	              ON s.station_id = g.station_id 
+// 	              INNER JOIN Transportation t
+// 	              ON g.transport_id = t.transport_id
+// 	              INNER JOIN Type_Transport tt
+// 	              ON t.transport_type = tt.type_id
+// 	              WHERE s.station_id = '$station_id[$i]'";
+// 	  $result2 = mysqli_query($dbcon, $query2);
+// 	  while($row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC)) {
+// 	    $station_name[] =  $row2['station_name'];
+// 	    $station_transport[] =  $row2['type_transport'];
+// 	    $transport_line[] =  $row2['transport_line'];
+// 	  }
+// 	}
 ?>
 
 <!DOCTYPE html>
@@ -42,23 +46,28 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <style>
-body {font-family: "Times New Roman", Georgia, Serif;}
-h1,h2,h3,h4,h5,h6 {
-    font-family: "Playfair Display";
-    letter-spacing: 5px;
-}
+body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", Arial, Helvetica, sans-serif}
+/*body {font-family: "Times New Roman", Georgia, Serif;}*/
+/*h1,h2,h3,h4,h5,h6 {*/
+/*    font-family: "Playfair Display";*/
+/*    letter-spacing: 5px;*/
+/*}*/
 table,th,td{
 			border: 1px solid black;
 			border-collapse: collapse;
 		}
 </style>
 <body>
-
+<body class="w3-light-grey">
+	<div class="w3-bar w3-white w3-border-bottom w3-xlarge">
+  <a href="index.php" class="w3-bar-item w3-button w3-text-red w3-hover-red"><b><i class="fa fa-map-marker w3-margin-right"></i>Bangkok Attraction</b></a>
+</div>
 <!-- Page content -->
 <div class="w3-content" style="max-width:1100px">
 
@@ -71,7 +80,7 @@ table,th,td{
     <div class="w3-col m6 w3-padding-large">
       <h1 class="w3-center"><?php echo $name ?></h1><br>
       <p class="w3-large" style="text-indent: 2.5em;"><?php echo $detail ?></p>
-      <p class="w3-large">Catagory : <?php echo $catagory ?></p>
+      <p class="w3-large">Category : <?php echo $catagory ?></p>
       <p class="w3-large">Entrance Fee : <?php echo ($fee == 0)? "Free" : $fee ?></p>
       </div>
        
