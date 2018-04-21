@@ -18,18 +18,19 @@
 <!DOCTYPE html>
 <html>
 <head>
+<title>List Category</title>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Prompt">
 <link rel="stylesheet" href="/css/css.css">
 <style>
 body{
     background:#eee;
 }
-body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", Arial, Helvetica, sans-serif}
-
+body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", "Prompt", Arial, Helvetica, sans-serif}
 
 </style>
 

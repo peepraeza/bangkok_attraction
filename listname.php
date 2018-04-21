@@ -1,27 +1,12 @@
 <?php  
 	require 'connectdb.php';
 	
- 	$transport_id = $_GET['transport'];
- 	$line_id = $_GET['line'];
+ 	$name = $_GET['place_name'];
+ 	
 
-	$query = "SELECT * FROM Go_By g
-					 INNER JOIN Station s
-					 ON g.station_id = s.station_id
-					 INNER JOIN Near_By n
-					 ON s.station_id = n.station_id
-					 INNER JOIN Attraction a
-					 ON a.place_id = n.place_id
-					 INNER JOIN Type_Location l
-					 ON a.place_catagory = l.type_local_id
-					 WHERE g.transport_id = '$line_id'";
+	$query = "SELECT * FROM Attraction
+					 WHERE place_name LIKE '%$name%' OR '$name%' OR '%$name'";
   $result = mysqli_query($dbcon, $query);
-
-	$query_transport = "SELECT * FROM Transportation t
-											INNER JOIN Type_Transport tt
-											ON tt.type_id = t.transport_type
-											WHERE t.transport_id = '$line_id'";
-	$result_transport = mysqli_query($dbcon, $query_transport);
-	$row_transport = mysqli_fetch_array($result_transport, MYSQLI_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -49,7 +34,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway","Prompt", Arial, Helvetica, sans-
 	<div class="w3-bar w3-white w3-border-bottom w3-xlarge">
   <a href="index.php" class="w3-bar-item w3-button w3-text-red w3-hover-red" style="text-decoration:none"><b><i class="fa fa-map-marker w3-margin-right"></i>Bangkok Attraction</b></a>
 </div>
-	<h3 align = "center">เดินทางโดย: <?php echo $row_transport['type_transport'] ?>  สาย: <?php echo $row_transport['transport_line'] ?> </h3>
+	<h3 align = "center">สถานที่: <?php echo $name ?></h3>
 <div class="container">
 	<?php 
  	while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
