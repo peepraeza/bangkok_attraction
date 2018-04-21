@@ -66,7 +66,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway","Prompt", Arial, Helvetica, sans-
 				<div class="col-md-7 col-sm-12 col-xs-12">
 				<div class="product-deatil">
 						<h5 class="name">
-							<a href="#" class="name">
+							<a href="place.php?place_name=<?php echo $row['place_name'] ?>" class="name">
 								<?php echo $row['place_name'] ?>
 							</a>
 							<a style="text-decoration:none">

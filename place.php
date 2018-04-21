@@ -2,16 +2,16 @@
 	require 'connectdb.php';
 	
  	$place_name = $_GET['place_name'];
-  // $query = "SELECT * FROM Near_By n
-  //                     INNER JOIN Attraction a
-  //                     ON n.place_id = a.place_id 
-  //                     INNER JOIN Type_Location l
-  //                     ON a.place_catagory = l.type_local_id
-  //                     WHERE a.place_name = '$place_name'";
-  $query = "SELECT * FROM Attraction a
+  $query = "SELECT * FROM Near_By n
+                      INNER JOIN Attraction a
+                      ON n.place_id = a.place_id 
                       INNER JOIN Type_Location l
                       ON a.place_catagory = l.type_local_id
                       WHERE a.place_name = '$place_name'";
+  // $query = "SELECT * FROM Attraction a
+  //                     INNER JOIN Type_Location l
+  //                     ON a.place_catagory = l.type_local_id
+  //                     WHERE a.place_name = '$place_name'";
 	$result = mysqli_query($dbcon, $query);
   
 	while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
@@ -20,24 +20,24 @@
 	  $catagory = $row['type_local_name'];
 	  $detail = $row['place_detail'];
 	  $picture = $row['place_picture'];
-	 //$station_id[] =  $row['station_id'];
+	 $station_id[] =  $row['station_id'];
 	}
-// 	for($i = 0; $i < count($station_id); $i++){
-// 	  $query2 = "SELECT * FROM Station s
-// 	              INNER JOIN Go_By g 
-// 	              ON s.station_id = g.station_id 
-// 	              INNER JOIN Transportation t
-// 	              ON g.transport_id = t.transport_id
-// 	              INNER JOIN Type_Transport tt
-// 	              ON t.transport_type = tt.type_id
-// 	              WHERE s.station_id = '$station_id[$i]'";
-// 	  $result2 = mysqli_query($dbcon, $query2);
-// 	  while($row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC)) {
-// 	    $station_name[] =  $row2['station_name'];
-// 	    $station_transport[] =  $row2['type_transport'];
-// 	    $transport_line[] =  $row2['transport_line'];
-// 	  }
-// 	}
+	for($i = 0; $i < count($station_id); $i++){
+	  $query2 = "SELECT * FROM Station s
+	              INNER JOIN Go_By g 
+	              ON s.station_id = g.station_id 
+	              INNER JOIN Transportation t
+	              ON g.transport_id = t.transport_id
+	              INNER JOIN Type_Transport tt
+	              ON t.transport_type = tt.type_id
+	              WHERE s.station_id = '$station_id[$i]'";
+	  $result2 = mysqli_query($dbcon, $query2);
+	  while($row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC)) {
+	    $station_name[] =  $row2['station_name'];
+	    $station_transport[] =  $row2['type_transport'];
+	    $transport_line[] =  $row2['transport_line'];
+	  }
+	}
 ?>
 
 <!DOCTYPE html>
@@ -86,8 +86,17 @@ table,th,td{
       </div>
        
   </div>
- <hr>
-  <h2>ตารางยานพาหนะ</h2>
+ <?php  
+    			for($i = 0; $i < count($station_name); $i++){
+    				if( $station_transport[$i] == 'Bus'){
+    				  $bus_line[] = $transport_line[$i];
+    				}elseif ($station_transport[$i] == 'BTS') {
+    				  $bts_line[] = $transport_line[$i];
+    				}
+    			}
+    		?>
+  <h2>การเดินทางมายัง <?php echo $name ?></h2>
+  <p>ทาง BTS ขึ้นสาย : <?php echo $bts_line[0] ?> ลงสถานี :  </p>
   
 	   <table style="width: 900px">
 		<tr>
@@ -97,7 +106,12 @@ table,th,td{
 		</tr>
     		<?php  
     			for($i = 0; $i < count($station_name); $i++){
-    				
+    				if( $station_transport[$i] == 'Bus'){
+    				  $bus_line[] = $transport_line[$i];
+    				}elseif ($station_transport[$i] == 'BTS') {
+    				  $bts_line[] = $transport_line[$i];
+    				}
+    			
     		?>
     		<tr>
     			<td><?php echo $station_transport[$i] ?></td>
