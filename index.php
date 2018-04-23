@@ -51,7 +51,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", "Prompt", Arial, Helvetica, sans
    <?php  
 	require 'connectdb.php';
 
-  $query = "SELECT * FROM Type_Transport";
+  $query = "SELECT * FROM Type_Transport ORDER BY Type_Transport";
 	$result = mysqli_query($dbcon, $query);
 	?>
     <div id="Transportation" class="w3-container w3-white w3-padding-16 myLink">

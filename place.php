@@ -53,7 +53,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <style>
-body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway","Prompt", Arial, Helvetica, sans-serif}
+body,h1,h2,h3,h4,h5,h6 {font-family:"Prompt", Arial, Helvetica, sans-serif}
 /*body {font-family: "Times New Roman", Georgia, Serif;}*/
 /*h1,h2,h3,h4,h5,h6 {*/
 /*    font-family: "Playfair Display";*/
@@ -67,7 +67,7 @@ table,th,td{
 <body>
 <body class="w3-light-grey">
 	<div class="w3-bar w3-white w3-border-bottom w3-xlarge">
-  <a href="index.php" class="w3-bar-item w3-button w3-text-red w3-hover-red"><b><i class="fa fa-map-marker w3-margin-right"></i>Bangkok Attraction</b></a>
+  <a href="index.php" class="w3-bar-item w3-button w3-text-red w3-hover-red"><b style = "font-family: Raleway"><i class="fa fa-map-marker w3-margin-right"></i>Bangkok Attraction</b></a>
 </div>
 <!-- Page content -->
 <div class="w3-content" style="max-width:1100px">
@@ -84,45 +84,89 @@ table,th,td{
       <p class="w3-large">Category : <?php echo $catagory ?></p>
       <p class="w3-large">Entrance Fee : <?php echo ($fee == 0)? "Free" : $fee ?></p>
       </div>
-       
   </div>
- <?php  
-    			for($i = 0; $i < count($station_name); $i++){
-    				if( $station_transport[$i] == 'Bus'){
-    				  $bus_line[] = $transport_line[$i];
-    				}elseif ($station_transport[$i] == 'BTS') {
-    				  $bts_line[] = $transport_line[$i];
-    				}
-    			}
-    		?>
-  <h2>การเดินทางมายัง <?php echo $name ?></h2>
-  <p>ทาง BTS ขึ้นสาย : <?php echo $bts_line[0] ?> ลงสถานี :  </p>
   
-	   <table style="width: 900px">
+  <?php 
+    $query_transport = "SELECT * FROM Near_By n
+                      INNER JOIN Attraction a
+                      ON n.place_id = a.place_id 
+                      INNER JOIN Station s
+                      ON s.station_id = n.station_id
+                      INNER JOIN Type_Transport t
+                      ON t.type_id = s.transport_type
+                      WHERE a.place_name = '$place_name'";
+    $transport = mysqli_query($dbcon, $query_transport);
+	  while($row_transport = mysqli_fetch_array($transport, MYSQLI_ASSOC)) {
+	    $vehicle[] =  $row_transport['type_transport'];
+	  }
+
+	 function line($vehicle, $place_name){
+	   $query_line = "SELECT * FROM Go_By g
+					          INNER JOIN Station s
+					          ON g.station_id = s.station_id
+					          INNER JOIN Near_By n
+					          ON s.station_id = n.station_id
+					          INNER JOiN Transportation t
+					          ON t.transport_id = g.transport_id
+					          INNER JOIN Type_Transport tt
+					          ON tt.type_id = t.transport_type AND tt.type_id = s.transport_type
+					          INNER JOIN Attraction a
+					          ON a.place_id = n.place_id
+                    WHERE a.place_name = '$place_name' AND tt.type_transport = '$vehicle'";
+    $result_line = mysqli_query($GLOBALS['dbcon'], $query_line);
+	  while($row_line = mysqli_fetch_array($result_line, MYSQLI_ASSOC)) {
+	    $line[] =  $row_line['transport_line'];
+	  }
+	   $line_str = '';
+    			for ($i = 0; $i < count($line); $i++) {
+    			   $line_str = $line_str . " " . $line[$i];
+    			   if($i != count($line)-1){
+    			     $line_str = $line_str . "" . ",";
+    			   }
+    			}
+    			return $line_str;
+	 }
+	 
+	 function station($vehicle, $place_name){
+	   $query_station = "SELECT * FROM Near_By n
+                      INNER JOIN Attraction a
+                      ON n.place_id = a.place_id 
+                      INNER JOIN Station s
+                      ON s.station_id = n.station_id
+                      INNER JOIN Type_Transport t
+                      ON t.type_id = s.transport_type
+                      WHERE a.place_name = '$place_name' AND t.type_transport = '$vehicle'";
+    $result_station = mysqli_query($GLOBALS['dbcon'], $query_station);
+	  while($row_station = mysqli_fetch_array($result_station, MYSQLI_ASSOC)) {
+	    $station =  $row_station['station_name'];
+	  }
+	   return $station;
+	 }
+  ?>
+  
+   <h3>การเดินทางมายัง <?php echo $name ?></h3>
+  
+		<table style="width: 900px">
 		<tr>
 			<td><b>Vehicle</b></td>
 			<td><b>Line</b></td>
 			<td><b>Station</b></td>
 		</tr>
     		<?php  
-    			for($i = 0; $i < count($station_name); $i++){
-    				if( $station_transport[$i] == 'Bus'){
-    				  $bus_line[] = $transport_line[$i];
-    				}elseif ($station_transport[$i] == 'BTS') {
-    				  $bts_line[] = $transport_line[$i];
-    				}
-    			
+    			for($i = 0; $i < count($vehicle); $i++){
+    				
     		?>
     		<tr>
-    			<td><?php echo $station_transport[$i] ?></td>
-    			<td><?php echo $transport_line[$i] ?></td>
-    			<td><?php echo $station_name[$i] ?></td>
+    			<td><?php echo $vehicle[$i] ?></td>
+    			<td><?php echo line($vehicle[$i],$place_name),line($vehicle[$i],$place_name),line($vehicle[$i],$place_name)  ?></td>
+    			<td><?php echo station($vehicle[$i], $place_name) ?></td>
     		</tr>
 		    <?php  } 
 		        mysqli_free_result($result);
 		        mysqli_close($dbcon);
 		    ?>
 	    </table>
+	   
  <hr>
  
 <script>
