@@ -4,9 +4,11 @@
  	$catagory_id = $_GET['catagory'];
 
   $query = "SELECT * FROM Attraction A
+				  INNER JOIN Place_Category P
+				  ON A.place_id = P.place_id
 	              INNER JOIN Type_Location L
-	              ON A.place_catagory = L.type_local_id
-	              WHERE A.place_catagory = '$catagory_id'";
+	              ON P.type_local_id = L.type_local_id
+	              WHERE P.type_local_id = '$catagory_id'";
   $result = mysqli_query($dbcon, $query);
  	
 	$query_cate = "SELECT * FROM Type_Location
@@ -59,15 +61,15 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", "Prompt", Arial, Helvetica, sans
 				<div class="col-md-7 col-sm-12 col-xs-12">
 				<div class="product-deatil">
 						<h5 class="name">
-							<a href="place.php?place_name=<?php echo $row['place_name'] ?>" class="name">
+							<a href="place.php?place_name=<?php echo $row['place_name'] ?>" class="name" style="font-size:22px">
 								<?php echo $row['place_name'] ?>
 							</a>
 							<a style="text-decoration:none">
-								<span><?php echo $row['type_local_name'] ?></span>
+								<span style="font-size:16px"><?php echo $row['type_local_name'] ?></span>
 							</a>                            
 
 						</h5>
-						<p class="price-container">
+						<p>
 							<span><?php echo ($row['place_cost'] == 0)? "Free" : "฿{$row['place_cost']}" ?></span>
 						</p>
 						<span class="tag1"></span> 

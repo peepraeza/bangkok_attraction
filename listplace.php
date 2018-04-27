@@ -11,8 +11,10 @@
 					 ON s.station_id = n.station_id
 					 INNER JOIN Attraction a
 					 ON a.place_id = n.place_id
+					 INNER JOIN Place_Category p
+					 ON a.place_id = p.place_id
 					 INNER JOIN Type_Location l
-					 ON a.place_catagory = l.type_local_id
+					 ON p.type_local_id = l.type_local_id
 					 WHERE g.transport_id = '$line_id'";
   $result = mysqli_query($dbcon, $query);
 
@@ -66,15 +68,15 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway","Prompt", Arial, Helvetica, sans-
 				<div class="col-md-7 col-sm-12 col-xs-12">
 				<div class="product-deatil">
 						<h5 class="name">
-							<a href="place.php?place_name=<?php echo $row['place_name'] ?>" class="name">
+							<a href="place.php?place_name=<?php echo $row['place_name'] ?>" class="name" style="font-size:22px">
 								<?php echo $row['place_name'] ?>
 							</a>
 							<a style="text-decoration:none">
-								<span><?php echo $row['type_local_name'] ?></span>
+								<span style="font-size:16px"><?php echo $row['type_local_name'] ?></span>
 							</a>                            
 
 						</h5>
-						<p class="price-container">
+						<p>
 							<span><?php echo ($row['place_cost'] == 0)? "Free" : "฿{$row['place_cost']}" ?></span>
 						</p>
 						<span class="tag1"></span> 

@@ -5,23 +5,23 @@
   $query = "SELECT * FROM Near_By n
                       INNER JOIN Attraction a
                       ON n.place_id = a.place_id 
+                      INNER JOIN Place_Category p
+                      ON a.place_id = p.place_id
                       INNER JOIN Type_Location l
-                      ON a.place_catagory = l.type_local_id
+                      ON p.type_local_id = l.type_local_id
                       WHERE a.place_name = '$place_name'";
-  // $query = "SELECT * FROM Attraction a
-  //                     INNER JOIN Type_Location l
-  //                     ON a.place_catagory = l.type_local_id
-  //                     WHERE a.place_name = '$place_name'";
 	$result = mysqli_query($dbcon, $query);
   
 	while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
 	  $name = $row['place_name'];
 	  $fee = $row['place_cost'];
-	  $catagory = $row['type_local_name'];
+	  $catagory[] = $row['type_local_name'];
 	  $detail = $row['place_detail'];
 	  $picture = $row['place_picture'];
 	 $station_id[] =  $row['station_id'];
 	}
+	$catagory = array_values(array_unique($catagory));
+
 	for($i = 0; $i < count($station_id); $i++){
 	  $query2 = "SELECT * FROM Station s
 	              INNER JOIN Go_By g 
@@ -81,8 +81,8 @@ table,th,td{
     <div class="w3-col m6 w3-padding-large">
       <h1 class="w3-center"><?php echo $name ?></h1><br>
       <p class="w3-large" style="text-indent: 2.5em;"><?php echo $detail ?></p>
-      <p class="w3-large">Category : <?php echo $catagory ?></p>
-      <p class="w3-large">Entrance Fee : <?php echo ($fee == 0)? "Free" : $fee ?></p>
+      <p class="w3-large">ประเภท : <?php echo category($catagory) ?></p>
+      <p class="w3-large">ค่าเข้า : <?php echo ($fee == 0)? "Free" : $fee ?></p>
       </div>
   </div>
   
@@ -99,6 +99,17 @@ table,th,td{
 	  while($row_transport = mysqli_fetch_array($transport, MYSQLI_ASSOC)) {
 	    $vehicle[] =  $row_transport['type_transport'];
 	  }
+	  
+	 function category($category){
+	   $category_str = '';
+    			for ($i = 0; $i < count($category); $i++) {
+    			   $category_str = $category_str . " " . $category[$i];
+    			   if($i != count($category)-1){
+    			     $category_str = $category_str . "" . ",";
+    			   }
+    			}
+    			return $category_str;
+	 }
 
 	 function line($vehicle, $place_name){
 	   $query_line = "SELECT * FROM Go_By g
@@ -146,11 +157,11 @@ table,th,td{
   
    <h3>การเดินทางมายัง <?php echo $name ?></h3>
   
-		<table style="width: 900px">
-		<tr>
-			<td><b>Vehicle</b></td>
-			<td><b>Line</b></td>
-			<td><b>Station</b></td>
+		<table class="w3-table-all" style="width: 70%">
+		<tr class="w3-blue">
+			<th>Vehicle</th>
+			<th style="width: 50%">Line</th>
+			<th>Station</th>
 		</tr>
     		<?php  
     			for($i = 0; $i < count($vehicle); $i++){
@@ -158,7 +169,7 @@ table,th,td{
     		?>
     		<tr>
     			<td><?php echo $vehicle[$i] ?></td>
-    			<td><?php echo line($vehicle[$i],$place_name),line($vehicle[$i],$place_name),line($vehicle[$i],$place_name)  ?></td>
+    			<td><?php echo line($vehicle[$i],$place_name) ?></td>
     			<td><?php echo station($vehicle[$i], $place_name) ?></td>
     		</tr>
 		    <?php  } 
