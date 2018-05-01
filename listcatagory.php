@@ -33,14 +33,42 @@ body{
     background:#eee;
 }
 body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", "Prompt", Arial, Helvetica, sans-serif}
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #fff;
+}
+
+li {
+    float: left;
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 8px 14px;
+    text-decoration: none;
+}
+
+li a:hover:not(.active) {
+    background-color: #000;
+    text-decoration: none;
+}
 
 </style>
 
 </head>
 
 <body class="w3-light-grey">
-	<div class="w3-bar w3-white w3-border-bottom w3-xlarge">
-  <a href="index.php" class="w3-bar-item w3-button w3-text-red w3-hover-red"><b><i class="fa fa-map-marker w3-margin-right"></i>Bangkok Attraction</b></a>
+	<!-- Navigation Bar -->
+<div class="w3-bar w3-white w3-border-bottom w3-xlarge">
+  <ul>
+  <li><a href="index.php" class="active w3-text-red w3-hover-red"><b><i class="fa fa-map-marker w3-margin-right"></i>Bangkok Attraction</b></a></li>
+  <li style="float:right"><a class = "active w3-text-red w3-hover-red" href="about.php"><b>About</b></a></li>
+</ul>
 </div>
 
 <h3 align = "center">Category : <?php echo $row_cate['type_local_name'] ?></h3>
@@ -65,7 +93,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", "Prompt", Arial, Helvetica, sans
 								<?php echo $row['place_name'] ?>
 							</a>
 							<a style="text-decoration:none">
-								<span style="font-size:16px"><?php echo $row['type_local_name'] ?></span>
+								<span style="font-size:16px"><?php echo category($row['place_name']) ?></span>
 							</a>                            
 
 						</h5>
@@ -92,6 +120,26 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", "Prompt", Arial, Helvetica, sans
 
 </div>
 <?php 
+	}
+	function category($place_name){
+		$query_cate = "SELECT * FROM Attraction A
+							INNER JOIN Place_Category P
+							ON A.place_id = P.place_id
+	            			INNER JOIN Type_Location L
+	            			ON P.type_local_id = L.type_local_id
+	            			WHERE A.place_name = '$place_name'";
+  $result_cate = mysqli_query($GLOBALS['dbcon'], $query_cate);
+  while($row_cate = mysqli_fetch_array($result_cate, MYSQLI_ASSOC)) {
+	    $cate[] =  $row_cate['type_local_name'];
+	  }
+  $cate_str = '';
+		for ($i = 0; $i < count($cate); $i++) {
+		   $cate_str = $cate_str . " " . $cate[$i];
+		   if($i != count($cate)-1){
+		     $cate_str = $cate_str . "" . ",";
+		   }
+		}
+		return $cate_str;
 	}
 ?>
 </div>

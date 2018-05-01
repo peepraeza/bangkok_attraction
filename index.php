@@ -13,7 +13,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <style>
 body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", "Prompt", Arial, Helvetica, sans-serif}
-/*.myLink {display: none}*/
+
 ul {
     list-style-type: none;
     margin: 0;
@@ -39,9 +39,6 @@ li a:hover:not(.active) {
     text-decoration: none;
 }
 
-.active {
-    
-}
 </style>
 <body class="w3-light-grey">
 
@@ -54,8 +51,8 @@ li a:hover:not(.active) {
 </div>
 
 <!-- Header -->
-<header class="w3-display-container w3-content w3-hide-small" style="max-width:1500px">
-  <img class="w3-image" src="/w3images/bangkok.jpg" alt="London" width="1500" height="700">
+<header class="w3-display-container w3-content w3-hide-small" style="max-width:100%">
+  <img class="w3-image" src="/w3images/bangkok.jpg" alt="London" width="100%">
   <div class="w3-display-middle" style="width:60%">
     <div class="w3-bar w3-black">
       <button class="w3-bar-item w3-button tablink" onclick="openLink(event, 'Location');"><i class="fa fa-map-marker w3-margin-right"></i>Location</button>

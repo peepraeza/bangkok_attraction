@@ -2,13 +2,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-		<meta charset="UTF-8">
-<!--<link rel="stylesheet" href="/css/polaroid.css">-->
-<!--<script src="polaroid.js"></script>-->
+	<title>About Us</title>
+	<meta charset="UTF-8">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Prompt">
 <style>
 *{ margin:0; padding:0; }
 
@@ -70,7 +70,7 @@ body {
 
 .polaroids ul img {
   display: block;
-  width: 262px;
+  width: 450px;
   margin-bottom: 1px;
 }
 
@@ -100,28 +100,73 @@ from { -moz-transform: rotate(0deg) }
 90%  { -moz-transform: rotate(0.2deg) }
 to   { -moz-transform: rotate(0deg) }
 }
+body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway","Prompt", Arial, Helvetica, sans-serif}
+.nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #fff;
+}
 
+.nav li {
+    float: left;
+}
+
+.nav li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 8px 14px;
+    text-decoration: none;
+}
+
+.nav li a:hover:not(.active) {
+    background-color: #000;
+    text-decoration: none;
+}
 </style>
 
-<body>
-	<div class="polaroids w3-center w3-opacity-min">
+<body  class="w3-light-grey">
+		<div class="w3-bar w3-white w3-border-bottom w3-xlarge">
+			<ul class = "nav">
+  <li class="nav"><a href="index.php" class="active w3-text-red w3-hover-red"><b><i class="fa fa-map-marker w3-margin-right"></i>Bangkok Attraction</b></a></li>
+  <li class="nav" style="float:right"><a class = "active w3-text-red w3-hover-red" href="about.php"><b>About</b></a></li>
+</ul>
+  <!--<a href="index.php" class="w3-bar-item w3-button w3-text-red w3-hover-red"><b><i class="fa fa-map-marker w3-margin-right"></i>Bangkok Attraction</b></a>-->
+</div>
+	<div class="polaroids w3-center">
   <ul>
     <li>
-      <a title="Just">
-      <img alt="" src="/w3images/bangkok.jpg">
+      <a title="..">
+      <img alt="" src="/w3images/ohm_pee.jpg">
       </a><span class="pin"></span>
     </li>
     <li>
-      <a  title="Keep">
-      <img alt="" src="/w3images/london2.jpg">
+      <a  title="กลุ่มที่ 1">
+      <img alt="" src="/w3images/ploy_nut.jpg">
       </a><span class="pin"></span>
     </li>
     <li>
-      <a title="Smiling">
-      <img alt="" src="/w3images/paragon.jpg">
+      <a title="..">
+      <img alt="" src="/w3images/bill_jj.jpg">
       </a><span class="pin"></span>
     </li>
+    
   </ul>
+  <div class=w3-center>
+  <h2 >รายชื่อสมาชิก(เรียงจากซ้าย)</h2>
+  <p style = "font-size:20px">1.นายอภิชิต สุทธาโรจน์</p>
+  <p style = "font-size:20px">2.นายพีรวิชญ์ วันเดช</p>
+  <p style = "font-size:20px">3.นางสาวณัฐฐิญา ตันติสิริพัฒนา</p>
+  <p style = "font-size:20px">4.นายธนพล ยุบรัมย์</p>
+  <p style = "font-size:20px">5.นายชนน ตั้งศิริเสถียร</p>
+  <p style = "font-size:20px">6.นายจิรทีปต์ เหมวุฒิพันธ์</p>
+  </div>
+</div>
+
+<div>
+	
 </div>
 </body>
 

@@ -54,20 +54,45 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <style>
 body,h1,h2,h3,h4,h5,h6 {font-family:"Prompt", Arial, Helvetica, sans-serif}
-/*body {font-family: "Times New Roman", Georgia, Serif;}*/
-/*h1,h2,h3,h4,h5,h6 {*/
-/*    font-family: "Playfair Display";*/
-/*    letter-spacing: 5px;*/
-/*}*/
+
 table,th,td{
 			border: 1px solid black;
 			border-collapse: collapse;
 		}
+		ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #fff;
+}
+
+li {
+    float: left;
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 8px 14px;
+    text-decoration: none;
+}
+
+li a:hover:not(.active) {
+    background-color: #000;
+    text-decoration: none;
+}
+
 </style>
 <body>
 <body class="w3-light-grey">
-	<div class="w3-bar w3-white w3-border-bottom w3-xlarge">
-  <a href="index.php" class="w3-bar-item w3-button w3-text-red w3-hover-red"><b style = "font-family: Raleway"><i class="fa fa-map-marker w3-margin-right"></i>Bangkok Attraction</b></a>
+	<!-- Navigation Bar -->
+<div class="w3-bar w3-white w3-border-bottom w3-xlarge">
+  <ul>
+  <li><a href="index.php" class="active w3-text-red w3-hover-red"><b><i class="fa fa-map-marker w3-margin-right"></i>Bangkok Attraction</b></a></li>
+  <li style="float:right"><a class = "active w3-text-red w3-hover-red" href="about.php"><b>About</b></a></li>
+</ul>
 </div>
 <!-- Page content -->
 <div class="w3-content" style="max-width:1100px">
