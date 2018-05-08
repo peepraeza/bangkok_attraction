@@ -11,10 +11,6 @@
 					 ON s.station_id = n.station_id
 					 INNER JOIN Attraction a
 					 ON a.place_id = n.place_id
-					 INNER JOIN Place_Category p
-					 ON a.place_id = p.place_id
-					 INNER JOIN Type_Location l
-					 ON p.type_local_id = l.type_local_id
 					 WHERE g.transport_id = '$line_id'";
   $result = mysqli_query($dbcon, $query);
 
@@ -24,6 +20,7 @@
 											WHERE t.transport_id = '$line_id'";
 	$result_transport = mysqli_query($dbcon, $query_transport);
 	$row_transport = mysqli_fetch_array($result_transport, MYSQLI_ASSOC);
+
 ?>
 
 <!DOCTYPE html>
@@ -100,7 +97,7 @@ li a:hover:not(.active) {
 								<?php echo $row['place_name'] ?>
 							</a>
 							<a style="text-decoration:none">
-								<span style="font-size:16px"><?php echo category($row['place_name']) ?></span>
+								<span style="font-size:16px"><?php echo category($row['place_name'])  ?></span>
 							</a>                            
 
 						</h5>
